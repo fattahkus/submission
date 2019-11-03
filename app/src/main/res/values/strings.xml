@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">submission</string>
+    <string name="item">Item</string>
+    <string name="product_name">Product Name</string>
+    <string name="detail">Product Detail</string>
+    <string name="favorite">Favorite</string>
+    <string name="share">Share</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="list">list</string>
+    <string name="grid">grid</string>
+    <string name="cardview">card</string>
+    <string name="my_name">Irfan Fattah Kusuma Aji</string>
+    <string name="my_mail">fattahirfan05@gmail.com</string>
+</resources>
