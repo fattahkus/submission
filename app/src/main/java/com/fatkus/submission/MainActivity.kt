@@ -4,11 +4,13 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.*
+import androidx.fragment.app.Fragment
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.viewpager.widget.ViewPager
 import com.fatkus.submission.adapter.CardViewProductAdapter
 import com.fatkus.submission.adapter.GridProductAdapter
 import com.fatkus.submission.adapter.ListProductAdapter

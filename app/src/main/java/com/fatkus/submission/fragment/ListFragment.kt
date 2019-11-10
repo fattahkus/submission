@@ -19,8 +19,8 @@ class ListFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_list, container, false)
-        val intent = Intent(context, MainActivity::class.java)
-        context?.startActivity(intent)
+//        val intent = Intent(context, MainActivity::class.java)
+//        context?.startActivity(intent)
     }
 
 
