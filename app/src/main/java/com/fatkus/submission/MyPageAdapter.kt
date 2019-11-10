@@ -15,8 +15,8 @@ class MyPagerAdapter(fm: FragmentManager): FragmentPagerAdapter(fm){
   //  sebuah list yang menampung objek Fragment
     private val pages = listOf(
         ListFragment(),
-        GridFragment(),
-        CardFragment()
+      GridFragment(),
+      CardFragment()
     )
 //    private fun setMode(selectedMode: TabLayout.Mode){
 //        when(selectedMode){

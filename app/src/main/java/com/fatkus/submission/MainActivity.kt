@@ -1,15 +1,14 @@
 package com.fatkus.submission
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.*
-import androidx.fragment.app.Fragment
+import android.view.Menu
+import android.view.MenuItem
 import android.widget.ImageView
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.ViewPager
 import com.fatkus.submission.adapter.CardViewProductAdapter
 import com.fatkus.submission.adapter.GridProductAdapter
@@ -17,90 +16,153 @@ import com.fatkus.submission.adapter.ListProductAdapter
 import com.fatkus.submission.model.Product
 import com.fatkus.submission.model.ProductData
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.fragment_list.*
 
 class MainActivity : AppCompatActivity() {
-    private lateinit var rvProduct: RecyclerView
+
     private var list: ArrayList<Product> = arrayListOf()
-    private lateinit var listProductAdapter: ListProductAdapter
 
     private lateinit var user_profil: ImageView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         setContentView(R.layout.activity_main)
 
-        viewPager.adapter = MyPagerAdapter(supportFragmentManager)
-        tabLayout.setupWithViewPager(viewPager)
 
-        rvProduct = findViewById(R.id.rv_product)
-        rvProduct.setHasFixedSize(true)
-        list.addAll(ProductData.listProduct)
-        showProductList()
-
-    }
-    private fun showProductList(){
-        rvProduct.layoutManager = LinearLayoutManager(this)
-        val listProductAdapter = ListProductAdapter(list)
-        rvProduct.adapter = listProductAdapter
-
-        listProductAdapter.setOnItemClickCallback (object : ListProductAdapter.OnItemClickCallback {
-            override fun onItemClicked(data: Product) {
-                showSelectedProduct(data)
-            }
-        })
-
-        }
-    private fun showProductGrid() {
-        rvProduct.layoutManager = GridLayoutManager(this, 2)
-        val gridProductAdapter = GridProductAdapter(list)
-        rvProduct.adapter = gridProductAdapter
-        //* Back *//
-        gridProductAdapter.setOnItemClickCallback (object : GridProductAdapter.OnItemClickCallback{
-            override fun onItemClicked(data: Product) {
-                showSelectedProduct(data)
-            }
-        })
-    }
-    private fun showProductCardView() {
-        rvProduct.layoutManager = LinearLayoutManager(this)
-        val cardViewProductAdapter = CardViewProductAdapter(list)
-        rvProduct.adapter = cardViewProductAdapter
-
-        cardViewProductAdapter.setOnItemClickCallback (object : CardViewProductAdapter.OnItemClickCallback{
-            override fun onItemClicked(data: Product) {
-                showSelectedProduct(data)
-            }
-        })
-    }
-
-    private fun showSelectedProduct(data: Product) {
-        Toast.makeText(this, data.name, Toast.LENGTH_LONG).show()
+        initComponent()
 
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
+
         menuInflater.inflate(R.menu.user, menu)
+
         return super.onCreateOptionsMenu(menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        setMode(item.itemId)
-        return super.onOptionsItemSelected(item)
-    }
 
-    private fun setMode(selectedMode: Int) {
-        when (selectedMode) {
-            R.id.user_profil -> {
-//                showProductList()
-                intent = Intent(this,AccountActivity::class.java)
-                startActivity(intent)
-            }
+        when (item.itemId) {
+
+            R.id.user_profil -> startActivity(Intent(this, AccountActivity::class.java))
+
 //            R.id.grid -> {
 //                showProductGrid()
 //            }
 //            R.id.CardView -> {
 //                showProductCardView()
 //            }
+
         }
+
+        return true
     }
+
+
+    private fun initComponent() {
+
+        initData()
+        initTabLayout()
+
+        adaterList()
+    }
+
+    private fun initData() {
+
+        list.addAll(ProductData.listProduct)
+
+    }
+
+    private fun initTabLayout() {
+
+        viewPager.adapter = MyPagerAdapter(supportFragmentManager)
+        tabLayout.setupWithViewPager(viewPager)
+
+        viewPager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
+            override fun onPageScrollStateChanged(state: Int) {
+
+            }
+
+            override fun onPageScrolled(
+                position: Int,
+                positionOffset: Float,
+                positionOffsetPixels: Int
+            ) {
+
+            }
+
+            override fun onPageSelected(position: Int) {
+
+                when (position) {
+
+                    0 -> adaterList()
+                    1 -> adaterGrid()
+                    else -> adapterCard()
+
+                }
+
+            }
+        })
+
+    }
+
+    private fun adaterList() {
+
+        val adapter = ListProductAdapter(list)
+
+        rv_product.adapter = adapter
+        rv_product.layoutManager = LinearLayoutManager(this)
+        rv_product.setHasFixedSize(true)
+
+        adapter.setOnItemClickCallback(object : ListProductAdapter.OnItemClickCallback {
+            override fun onItemClicked(data: Product) {
+
+                showSelectedProduct(data)
+
+            }
+        })
+
+    }
+
+    private fun adaterGrid() {
+
+        val adapter = GridProductAdapter(list)
+
+        rv_product.adapter = GridProductAdapter(list)
+        rv_product.layoutManager = GridLayoutManager(this, 3)
+        rv_product.setHasFixedSize(true)
+
+        adapter.setOnItemClickCallback(object : GridProductAdapter.OnItemClickCallback {
+            override fun onItemClicked(data: Product) {
+
+                showSelectedProduct(data)
+
+            }
+        })
+
+    }
+
+    private fun adapterCard() {
+
+        val adapter = CardViewProductAdapter(list)
+
+        rv_product.adapter = adapter
+        rv_product.layoutManager = LinearLayoutManager(this)
+        rv_product.setHasFixedSize(true)
+
+        adapter.setOnItemClickCallback(object : CardViewProductAdapter.OnItemClickCallback {
+            override fun onItemClicked(data: Product) {
+
+                showSelectedProduct(data)
+
+            }
+        })
+
+    }
+
+    private fun showSelectedProduct(data: Product) {
+        Toast.makeText(this, data.name, Toast.LENGTH_LONG).show()
+    }
+
 }
